@@ -1,0 +1,118 @@
+{% extends "ReviewsApp/base_generic.html" %}
+
+{% block content %}
+
+<p>Reviews:</p>
+
+<!-- Search button -->
+<div class="row">
+    <div class="col s12">
+        <div class="row">
+        <div class="input-field col s12">
+            <i class="material-icons prefix">search</i>
+            <input type="text" id="review_search" src="{% url 'get_response' %}" class="autocomplete">
+            <label for="review_search">Search</label>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sort select -->
+<h5 class="center-align">Sort rating:</h5>
+<div class="input-field col s12">
+	<select name="sort" id="sort">
+		<option value="1" id="without">Without</option>
+		<option value="2" id="from_more_to_less">From more to less</option>
+		<option value="3" id="from_less_to_more">From less to more</option>
+	</select>
+</div>
+
+<div class="center-align">
+    <!-- Button to add review -->
+    <a class="btn-floating btn-large waves-effect waves-light red modal-trigger" href="#modal1"><i class="material-icons">add</i></a>
+<div class="reviews">
+{% for review in reviews %}
+    
+    <div class="review">
+        <div class="card-panel">
+            <div class="row">
+                <div class="col s5">
+                    <p>{{ review.person.first_name }}</p>
+                    <a href="{{ review.person.account }}" target="_blank"><i class="material-icons">account_circle</i></a>
+                </div>
+                <div class="col s2">
+                    <p>{{ review.rating }} stars</p>
+                </div>
+                <div class="col s5">
+                    <p>{{ review.blogger.first_name }}</p>
+                    <a href="{{ review.blogger.account }}" target="_blank"><i class="material-icons">account_circle</i></a>
+                </div>
+            </div>
+            <p>{{ review.content|linebreaks }}</p>
+        </div>
+    </div>
+
+{% empty %}
+        No reviews.
+{% endfor %}
+</div> <!-- center-align -->
+</div> <!-- reviews -->
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+    <form action="{% url 'reviews_api' %}" method="post" id="post-form">{% csrf_token %}
+    <div class="modal-content">
+
+        <h5>You</h5>
+	    <div class="row">
+		    <div class="input-field col s4">
+			    <input id="pers_first_name" type="text" class="validate">
+			    <label for="pers_first_name">First name</label>
+		    </div>
+		    <div class="input-field col s4">
+			    <input id="pers_last_name" type="text" class="validate">
+			    <label for="pers_last_name">Last name (optional)</label>
+		    </div>
+            <div class="input-field col s4">
+                <input id="pers_account" type="url" class="validate">
+			    <label for="pers_account">Account (optional)</label>
+            </div>
+	    </div>
+
+	    <h5>Blogger</h5>
+	    <div class="row">
+		    <div class="input-field col s4">
+			    <input id="blog_first_name" type="text" class="validate">
+			    <label for="blog_first_name">First name</label>
+		    </div>
+		    <div class="input-field col s4">
+			    <input id="blog_last_name" type="text" class="validate">
+			    <label for="blog_last_name">Last name (optional)</label>
+		    </div>
+            <div class="input-field col s4">
+                <input id="blog_account" type="url" class="validate">
+			    <label for="blog_account">Account (optional)</label>
+            </div>
+	    </div>
+	    <div class="row">
+		    <div class="input-field col s12">
+			    <input id="review_rating" type="number" min="0" max="5" step="1" class="validate">
+			    <label for="review_rating">Rating (Placeholder)</label>
+		    </div>
+	    </div>
+	    <div class="row">
+		    <div class="input-field col s12">
+			    <textarea id="review_content" class="materialize-textarea"></textarea>
+			    <label for="review_content">Your review here</label>
+		    </div>
+	    </div>
+
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancel</a>
+        <button type="submit" class="modal-close btn waves-effect waves-light">Send</button>
+    </div>
+    </form>
+</div>
+
+{% endblock %}

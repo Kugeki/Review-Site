@@ -1,0 +1,16 @@
+body
+{
+}
+
+div.review {
+    padding-top: 20px;
+}
+
+div.card-panel {
+    margin-left: 7px;
+    margin-right: 7px;
+    max-width: 500px;
+    min-width: 40vw;
+    margin: 0 auto;
+    background-color: #f8f8f8;
+}
