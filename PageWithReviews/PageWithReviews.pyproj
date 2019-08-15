@@ -66,6 +66,7 @@
     <Content Include="ReviewsApp\static\js\script.js" />
     <Content Include="ReviewsApp\templates\ReviewsApp\base_generic.html" />
     <Content Include="ReviewsApp\templates\ReviewsApp\index.html" />
+    <Content Include="runtime.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="PageWithReviews\" />
